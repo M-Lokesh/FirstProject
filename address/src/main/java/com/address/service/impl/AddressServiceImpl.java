@@ -22,8 +22,14 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressResponse> getAddress() {
-        List<Address> addresses = addressRepository.findAllAddressByItsEmployees();
+        List<Address> addresses = addressRepository.findAll();
         List<AddressResponse> addressResponses = addresses.stream().map(address -> modelMapper.map(address, AddressResponse.class)).collect(Collectors.toList());
         return addressResponses;
+    }
+
+    @Override
+    public AddressResponse getAddressByEmployeeId(Long employeeId) {
+        Address address = addressRepository.findAddressByEmployeeId(employeeId);
+        return modelMapper.map(address, AddressResponse.class);
     }
 }
